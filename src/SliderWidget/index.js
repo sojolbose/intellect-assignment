@@ -1,4 +1,3 @@
-// src/SliderWithProgress.js
 import React, { useState, useEffect, useRef } from 'react';
 import './SliderWidget.css';
 
@@ -12,24 +11,28 @@ const SliderWidget = () => {
   };
 
   useEffect(() => {
+    // logic to update the circular progress bar based on the slider value
     const slider = document.querySelector('.slider');
     const percentage = (value / 10) * 100;
     slider.style.background = `linear-gradient(to right, #81c7da ${percentage}%, #ffffff ${percentage}%)`;
 
+    // dynamically adjust the font size of the progress value for fine-graned control based on the width and height of the progress container
     const adjustFontSize = () => {
-        if (progressRef.current) {
-          const { width, height } = progressRef.current.getBoundingClientRect();
-          const newSize = Math.min(width, height) * 0.2; // Adjust the 0.2 factor as needed
-          progressRef.current.style.fontSize = `${newSize}px`;
-        }
-      };
+      if (progressRef.current) {
+        // get the width and height of the progress container
+        const { width, height } = progressRef.current.getBoundingClientRect();
+        const newSize = Math.min(width, height) * 0.2;
+        progressRef.current.style.fontSize = `${newSize}px`;
+      }
+    };
   
-      adjustFontSize();
-      window.addEventListener('resize', adjustFontSize);
+    adjustFontSize();
+    window.addEventListener('resize', adjustFontSize);
   
-      return () => {
-        window.removeEventListener('resize', adjustFontSize);
-      };
+    // clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', adjustFontSize);
+    };
   }, [value]);
 
   return (
@@ -38,13 +41,13 @@ const SliderWidget = () => {
             <div className="dotted-border">
                 <div
                     className="circle"
+                    role="presentation"
                     style={{
                     background: `conic-gradient(#ffffff ${value * 36}deg, #356b7a ${value * 36}deg)`
                     }}
                 >
                     <div className="circle-inner">
                         <div className="inner-section">
-                            {/* <span className="progress-value">{value}</span> */}
                         </div>
                     </div>
                 </div>
