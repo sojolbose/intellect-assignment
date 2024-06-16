@@ -22,6 +22,7 @@ const ScaleSelector = () => {
                 className={`section section-${value}`}
                 style={{ background: getFillColor(value) }}
                 onClick={() => handleClick(value)}
+                role="button"
             >
             </div>
             ))}
